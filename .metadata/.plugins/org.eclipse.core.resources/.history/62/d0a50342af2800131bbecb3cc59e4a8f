@@ -1,0 +1,52 @@
+package com.googlemaps.demo;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import android.os.Environment;
+
+/*
+ * Used handle external files for the overall program
+ * 
+ */
+public class FileOut {
+	
+	int markers = 0;
+
+	public FileOut() {
+
+		try {
+			File file = new File(Environment.getExternalStorageDirectory()
+					.getPath(), "mapPoints.txt");
+			BufferedWriter output = new BufferedWriter(new FileWriter(file,
+					true));
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void add(String to_add) {
+		try {
+			//increment the number of markers
+			++markers;
+			
+			String text = to_add;
+			File file = new File(Environment.getExternalStorageDirectory()
+					.getPath(), "mapPoints.txt");
+			BufferedWriter output = new BufferedWriter(new FileWriter(file,
+					true));
+			output.write(text + "\n");
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void read(){
+		
+		
+	}
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.googlemaps.demo.FileOut&apos; to &apos;FileManager&apos;&#x0A;- Original project: &apos;demomapV1&apos;&#x0A;- Original element: &apos;com.googlemaps.demo.FileOut&apos;&#x0A;- Renamed element: &apos;com.googlemaps.demo.FileManager&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;FileOut&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;com.googlemaps.demo{FileOut.java[FileOut" matchStrategy="1" name="FileManager" qualified="false" references="true" similarDeclarations="false" stamp="1380423276376" textual="false" version="1.0"/>
+</session>

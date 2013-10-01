@@ -1,0 +1,2 @@
+INDEX VERSION 1.126+C:\Users\Solus\Dropbox\Android_Macsode\.metadata\.plugins\org.eclipse.jdt.core
+3239268687.index

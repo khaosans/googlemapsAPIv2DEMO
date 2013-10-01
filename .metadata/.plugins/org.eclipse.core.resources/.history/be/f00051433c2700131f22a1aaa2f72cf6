@@ -1,0 +1,24 @@
+package com.googlemaps.demo;
+
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class Storage {
+
+	public static final String LAT = " _lat";
+	public static final String LONG = " _long";
+	public static final String INFO = " _info";
+	
+	private static final String DATA_NAME = "Markers";
+	private static final String DATA_TABLE = "Coordinates";
+	private static final int VERSION = 1;
+	
+	private static class DbHelper extends SQLiteOpenHelper{
+		
+		public DbHelper(Storage){
+			super(context,name, factory, version);
+		}
+	}
+			
+
+	
+}
