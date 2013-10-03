@@ -5,20 +5,20 @@
         android:id="@+id/setPoint1"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:title="Blue"/>
+        android:title="setFirstPoint"/>
     
 <item
         android:id="@+id/setPoint2"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:title="Red"/>
+        android:title="setSecondPoint"/>
 
     
 <item
         android:id="@+id/setPoint3"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:title="Green"/>
+        android:title="Draw Red Line"/>
 
 
 </menu>

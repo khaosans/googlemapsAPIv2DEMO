@@ -65,7 +65,7 @@ public class FileManager {
 					Charset.forName("UTF-8")));
 			while ((br.readLine()) != null) {
 				// Deal with the line
-				map.addMarker();
+				// map.addMarker();
 			}
 
 			// Done with the file

@@ -1,0 +1,35 @@
+package com.googlemaps.demo;
+
+import com.google.android.gms.maps.model.Marker;
+
+import android.app.Activity;
+import android.graphics.Interpolator;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.view.animation.LinearInterpolator;
+
+public class Animate extends Activity {
+
+	Marker mark;
+	Handler handler = new Handler();
+	long start = SystemClock.uptimeMillis();
+	final LinearInterpolator interp = new LinearInterpolator()
+	animator = new Runnable(){
+		
+		long elapsed = SystemClock.uptimeMillis() - start;
+		private float duration;
+		double t = interp.getInterpolation((float) elapsed / duration);
+		double lat = t* endlLatLng.latitude +(1-t)*startLatLng.latitude;
+		double lng= t* endLatLng.longitude +(1-t)* startLatLng.longitude;
+		
+		mark.setPosition(new LatLng(lat,lng));
+		if(t<1.0){
+			mHandler.postDelayed(this,16);
+		}
+		
+				
+		
+	};
+	handler.post(animator);
+	
+}

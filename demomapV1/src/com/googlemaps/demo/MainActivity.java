@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -23,11 +24,20 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MainActivity extends Activity implements LocationListener {
 
 	private GoogleMap googlemap;
 	Marker markerTouch;
+	Polyline line;
+
+	// create touch points
+	LatLng firstPoint = null;
+	LatLng lastPoint = null;
+
+	// create a new file
 	FileManager file = new FileManager();
 
 	// store the color from the menu
@@ -63,13 +73,21 @@ public class MainActivity extends Activity implements LocationListener {
 		} else if (item.getItemId() == R.id.setPoint2) {
 			colorValue = 2;
 		} else if (item.getItemId() == R.id.setPoint3) {
-			colorValue = 3;
+
+			if (firstPoint != null && lastPoint != null) {
+
+				line = googlemap.addPolyline(new PolylineOptions()
+						.add(firstPoint, lastPoint).width(5).color(Color.RED));
+			}
+			// change color back to default
+			colorValue = 1;
 		} else
 			return true;
 		return true;
 	}
 
 	@SuppressLint("NewApi")
+	// suppress the API levels error
 	private void setUpMap() {
 		if (googlemap == null) {
 			googlemap = ((MapFragment) getFragmentManager().findFragmentById(
@@ -87,7 +105,7 @@ public class MainActivity extends Activity implements LocationListener {
 				if (provider == null) {
 					onProviderDisabled(provider);
 
-				} // get last known location
+				}
 				Location loc = my_location.getLastKnownLocation(provider);
 
 				// change the location
@@ -106,6 +124,7 @@ public class MainActivity extends Activity implements LocationListener {
 
 			public void onMapLongClick(LatLng point) { // used to test to print
 														// out
+
 				Log.i(point.toString(), "User Long Clicked");
 
 				// print out the colors for the buttons
@@ -114,6 +133,8 @@ public class MainActivity extends Activity implements LocationListener {
 						point.toString());
 
 				if (colorValue == 1) {
+					// set the firstPoint to the touched position
+					firstPoint = point;
 					googlemap
 							.addMarker(marker
 									.position(point)
@@ -121,21 +142,14 @@ public class MainActivity extends Activity implements LocationListener {
 											.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 				}
 				if (colorValue == 2) {
+
+					lastPoint = point;
 					googlemap
 							.addMarker(marker
 									.position(point)
 									.icon(BitmapDescriptorFactory
 											.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 				}
-				if (colorValue == 3) {
-					googlemap
-							.addMarker(marker
-									.position(point)
-									.icon(BitmapDescriptorFactory
-											.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-				}
-
-				System.out.println(point.latitude + "---" + point.longitude);
 
 				file.add(point.toString());
 			}
@@ -170,20 +184,16 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 
 	@Override
-	public void onProviderDisabled(String provider) { // TODO
+	public void onProviderDisabled(String provider) {
 
 	}
 
 	@Override
-	public void onProviderEnabled(String provider) { // TODO
+	public void onProviderEnabled(String provider) {
 
 	}
 
 	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) { // TODO
-																				// Auto-generated
-																				// method
-																				// stub
-
+	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
 }
