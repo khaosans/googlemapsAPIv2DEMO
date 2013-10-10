@@ -1,5 +1,18 @@
 package com.googlemaps.demo;
 
+import java.io.IOException;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -9,6 +22,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,9 +43,19 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MainActivity extends Activity implements LocationListener {
 
+	final static String URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1000&types=cafe&name=starbucks&sensor=true&key=AIzaSyDNmhilRqYcFKo2Sp8HB8HgLnR05hLCplE";
 	private GoogleMap googlemap;
 	Marker markerTouch;
 	Polyline line;
+
+	// Json code stuff here
+	HttpClient client = new DefaultHttpClient();
+	JSONObject jsonResponse;
+	JSONObject jsonResult;
+	JSONObject jsonLocation;
+	JSONObject jsonObj;
+	JSONArray jsonArray;
+	JSONObject holder;
 
 	// create touch points
 	LatLng firstPoint = null;
@@ -43,6 +67,69 @@ public class MainActivity extends Activity implements LocationListener {
 	// store the color from the menu
 	private int colorValue = 1;
 
+	// function is used to return the json object
+	public JSONObject mapper(String toString) throws ClientProtocolException,
+			IOException, JSONException {
+		StringBuilder url = new StringBuilder(URL);
+		// used to add to the code
+		url.append("");
+
+		HttpGet get = new HttpGet(url.toString());
+
+		HttpResponse r = client.execute(get);
+		int status = r.getStatusLine().getStatusCode();
+		if (status == 200) {
+
+			// used to track the location of the string
+			file.add("status code 200");
+			HttpEntity e = r.getEntity();
+			String data = EntityUtils.toString(e);
+			jsonResponse = new JSONObject(data);
+			jsonArray = jsonResponse.getJSONArray("results");
+			jsonObj = jsonArray.getJSONObject(0);
+			jsonLocation = jsonObj.getJSONObject("location");
+			String test = jsonLocation.getString("lng");
+			file.add(test);
+
+			return jsonLocation;
+		} else {
+			file.add("error at  client");
+			return null;
+		}
+
+	}
+
+	public class Read extends AsyncTask<String, Integer, String> {
+
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			try {
+				holder = mapper("");
+				return jsonLocation.getString("lat");
+
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,6 +139,10 @@ public class MainActivity extends Activity implements LocationListener {
 			setContentView(R.layout.activity_main);
 			setUpMap();
 		}
+
+		// create the read
+		new Read().execute("lat");
+		new Read().execute("lng");
 	}
 
 	// make the menu options

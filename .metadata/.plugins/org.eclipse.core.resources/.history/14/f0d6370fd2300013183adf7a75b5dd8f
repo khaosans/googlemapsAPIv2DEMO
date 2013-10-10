@@ -1,0 +1,28 @@
+package com.googlemaps.demo;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+
+import com.googlemaps.demo.JSONParser;
+import com.paul.locations.R;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Places {
+
+	private String lat="", lon="", lati,loni;
+	float la,lo;
+	
+	// JSON parser class
+	JSONParser jsonParser = new JSONParser();
+	
+}

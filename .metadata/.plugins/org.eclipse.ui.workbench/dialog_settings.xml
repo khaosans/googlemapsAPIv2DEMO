@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="FileSystemImportWizard">
+		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID"/>
+		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_CREATE_CONTAINER_STRUCTURE_ID"/>
+		<list key="WizardFileSystemResourceImportPage1.STORE_SOURCE_NAMES_ID">
+			<item value="/Users/souriyakhaosanga/Dropbox/Android_Macsode"/>
+		</list>
+	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
 		<item value="900" key="dialogWidth"/>
 		<item value="563" key="dialogHeight"/>
 		<list key="orderedProviders">
+			<item value="org.eclipse.ui.preferences"/>
 			<item value="org.eclipse.ui.commands"/>
 			<item value="org.eclipse.ui.commands"/>
 		</list>
 		<list key="textArray">
+			<item value="classp"/>
 			<item value="key"/>
 			<item value="preferences"/>
 		</list>
 		<list key="orderedElements">
+			<item value="org.eclipse.jdt.ui.preferences.ClasspathVariablesPreferencePage"/>
 			<item value="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.ui.preferencePages.Keys)"/>
 			<item value="org.eclipse.ui.window.preferences(preferencePageId=com.android.ide.eclipse.adt.preferences.BuildPreferencePage)"/>
 		</list>
 		<list key="textEntries">
+			<item value="1"/>
 			<item value="1"/>
 			<item value="1"/>
 		</list>
@@ -33,8 +44,9 @@
 	<section name="org.eclipse.ui.preferences.keysPreferencePage">
 	</section>
 	<section name="ImportExportAction">
-		<item value="com.android.ide.eclipse.adt.project.ImportProjectWizard" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
+		<item value="org.eclipse.ui.wizards.import.FileSystem" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
 		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
 			<item value="com.android.ide.eclipse.wizards.category"/>
 		</list>
 	</section>
