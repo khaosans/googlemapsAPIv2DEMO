@@ -52,10 +52,15 @@ public class MainActivity extends Activity implements LocationListener {
 	HttpClient client = new DefaultHttpClient();
 	JSONObject jsonResponse;
 	JSONObject jsonResult;
+	JSONObject jsonGeom;
 	JSONObject jsonLocation;
 	JSONObject jsonObj;
 	JSONArray jsonArray;
 	JSONObject holder;
+	double[] latitude;
+	double[] longitude;
+	String[] nameOf;
+	int jsonLength;
 
 	// create touch points
 	LatLng firstPoint = null;
@@ -81,16 +86,32 @@ public class MainActivity extends Activity implements LocationListener {
 		if (status == 200) {
 
 			// used to track the location of the string
-			file.add("status code 200");
 			HttpEntity e = r.getEntity();
 			String data = EntityUtils.toString(e);
 			jsonResponse = new JSONObject(data);
 			jsonArray = jsonResponse.getJSONArray("results");
-			jsonObj = jsonArray.getJSONObject(0);
-			jsonLocation = jsonObj.getJSONObject("location");
-			String test = jsonLocation.getString("lng");
-			file.add(test);
+			jsonLength = jsonArray.length();
+			nameOf = new String[jsonLength];
+			latitude = new double[jsonLength];
+			longitude = new double[jsonLength];
+			for (int i = 0; i < jsonArray.length(); ++i) {
 
+				// access the json array
+				jsonObj = jsonArray.getJSONObject(i);
+				jsonGeom = jsonObj.getJSONObject("geometry");
+				jsonLocation = jsonGeom.getJSONObject("location");
+				String lng = jsonLocation.getString("lng");
+				String lat = jsonLocation.getString("lat");
+				nameOf[i] = jsonObj.getString("name");
+				latitude[i] = jsonLocation.getDouble("lat");
+				longitude[i] = jsonLocation.getDouble("lng");
+
+				// write to txt file for testing purpose
+				file.add(lat);
+				file.add(lng);
+				file.add(nameOf[i]);
+
+			}
 			return jsonLocation;
 		} else {
 			file.add("error at  client");
@@ -104,6 +125,7 @@ public class MainActivity extends Activity implements LocationListener {
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
+			addOverlay();
 
 		}
 
@@ -111,9 +133,7 @@ public class MainActivity extends Activity implements LocationListener {
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			try {
-				holder = mapper("");
-				return jsonLocation.getString("lat");
-
+				mapper("");
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -124,7 +144,6 @@ public class MainActivity extends Activity implements LocationListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 			return null;
 		}
 
@@ -137,12 +156,23 @@ public class MainActivity extends Activity implements LocationListener {
 		// check if the google play is available
 		if (IsGooglePlay()) { // set the page
 			setContentView(R.layout.activity_main);
+
 			setUpMap();
+			new Read().execute("");
 		}
 
-		// create the read
-		new Read().execute("lat");
-		new Read().execute("lng");
+	}
+
+	private void addOverlay() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < jsonLength; ++i) {
+
+			double la, lo;
+			la = latitude[i];
+			lo = longitude[i];
+			googlemap.addMarker(new MarkerOptions()
+					.position(new LatLng(la, lo)).title(nameOf[i]));
+		}
 	}
 
 	// make the menu options
@@ -203,7 +233,6 @@ public class MainActivity extends Activity implements LocationListener {
 				if (loc != null) {
 					onLocationChanged(loc);
 				}
-
 				// on map click listener
 				googlemap.setOnMapLongClickListener(onLongClickMapSettings());
 			}
@@ -218,7 +247,6 @@ public class MainActivity extends Activity implements LocationListener {
 
 				Log.i(point.toString(), "User Long Clicked");
 
-				// print out the colors for the buttons
 				MarkerOptions marker = new MarkerOptions().position(
 						new LatLng(point.latitude, point.longitude)).title(
 						point.toString());
