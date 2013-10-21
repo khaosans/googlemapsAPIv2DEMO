@@ -1,1 +1,0 @@
-This program is merely a tutorial for adding Android MAP API

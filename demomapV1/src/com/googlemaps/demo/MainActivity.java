@@ -43,7 +43,12 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MainActivity extends Activity implements LocationListener {
 
-	final static String URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1000&types=cafe&name=starbucks&sensor=true&key=AIzaSyDNmhilRqYcFKo2Sp8HB8HgLnR05hLCplE";
+	// members exist here
+	final static String URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
+	final static String URLEND = "&radius=2500&types=cafe&sensor=true&key=AIzaSyDNmhilRqYcFKo2Sp8HB8HgLnR05hLCplE";
+	static final private LatLng CORVALLIS = new LatLng(44.566871028,
+			-123.2818864658);
+	Location myLoc;
 	private GoogleMap googlemap;
 	Marker markerTouch;
 	Polyline line;
@@ -77,7 +82,17 @@ public class MainActivity extends Activity implements LocationListener {
 			IOException, JSONException {
 		StringBuilder url = new StringBuilder(URL);
 		// used to add to the code
-		url.append("");
+		LatLng currentLatLng = new LatLng(myLoc.getLatitude(),
+				myLoc.getLongitude());
+		double currLat = currentLatLng.latitude;
+		double currLng = currentLatLng.longitude;
+		String currLatString = Double.toString(currLat);
+		String currLngString = Double.toString(currLng);
+		url.append(currLatString);
+		url.append(",");
+		url.append(currLngString);
+		url.append(URLEND);
+		file.add(url.toString());
 
 		HttpGet get = new HttpGet(url.toString());
 
@@ -85,15 +100,19 @@ public class MainActivity extends Activity implements LocationListener {
 		int status = r.getStatusLine().getStatusCode();
 		if (status == 200) {
 
-			// used to track the location of the string
+			// Get the information from HTTP
 			HttpEntity e = r.getEntity();
 			String data = EntityUtils.toString(e);
+
+			// put the information into a JSON object
 			jsonResponse = new JSONObject(data);
 			jsonArray = jsonResponse.getJSONArray("results");
 			jsonLength = jsonArray.length();
 			nameOf = new String[jsonLength];
 			latitude = new double[jsonLength];
 			longitude = new double[jsonLength];
+
+			// Parse the information
 			for (int i = 0; i < jsonArray.length(); ++i) {
 
 				// access the json array
@@ -123,14 +142,7 @@ public class MainActivity extends Activity implements LocationListener {
 	public class Read extends AsyncTask<String, Integer, String> {
 
 		@Override
-		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
-			addOverlay();
-
-		}
-
-		@Override
-		protected String doInBackground(String... params) {
+		protected String doInBackground(String... arg0) {
 			// TODO Auto-generated method stub
 			try {
 				mapper("");
@@ -145,6 +157,12 @@ public class MainActivity extends Activity implements LocationListener {
 				e.printStackTrace();
 			}
 			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			addOverlay();
 		}
 
 	}
@@ -163,6 +181,7 @@ public class MainActivity extends Activity implements LocationListener {
 
 	}
 
+	// function adds the items located around the current location
 	private void addOverlay() {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < jsonLength; ++i) {
@@ -228,7 +247,8 @@ public class MainActivity extends Activity implements LocationListener {
 
 				}
 				Location loc = my_location.getLastKnownLocation(provider);
-
+				// store the location
+				myLoc = loc;
 				// change the location
 				if (loc != null) {
 					onLocationChanged(loc);
