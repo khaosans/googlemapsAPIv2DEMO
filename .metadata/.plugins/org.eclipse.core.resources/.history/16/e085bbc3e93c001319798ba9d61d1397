@@ -1,10 +1,3 @@
-/*
- * Souriya Khaosanga
- * Android Maps Demo
- * MainActivity.java
- * 
- */
-
 package com.googlemaps.demo;
 
 import java.io.IOException;
