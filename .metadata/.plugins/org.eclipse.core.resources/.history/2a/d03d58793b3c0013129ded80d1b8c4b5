@@ -81,7 +81,6 @@ public class MainActivity extends Activity implements LocationListener {
 			IOException, JSONException {
 		StringBuilder url = new StringBuilder(URL);
 		// used to add to the code
-
 		LatLng currentLatLng = new LatLng(myLoc.getLatitude(),
 				myLoc.getLongitude());
 		double currLat = currentLatLng.latitude;
@@ -243,7 +242,6 @@ public class MainActivity extends Activity implements LocationListener {
 
 				String provider = my_location.getBestProvider(new Criteria(),
 						true);
-
 				if (provider == null) {
 					onProviderDisabled(provider);
 

@@ -46,7 +46,8 @@ public class MainActivity extends Activity implements LocationListener {
 	// members exist here
 	final static String URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
 	final static String URLEND = "&radius=2500&types=cafe&sensor=true&key=AIzaSyDNmhilRqYcFKo2Sp8HB8HgLnR05hLCplE";
-	// my location
+	static final private LatLng CORVALLIS = new LatLng(44.566871028,
+			-123.2818864658);
 	Location myLoc;
 	private GoogleMap googlemap;
 	Marker markerTouch;
@@ -81,7 +82,6 @@ public class MainActivity extends Activity implements LocationListener {
 			IOException, JSONException {
 		StringBuilder url = new StringBuilder(URL);
 		// used to add to the code
-
 		LatLng currentLatLng = new LatLng(myLoc.getLatitude(),
 				myLoc.getLongitude());
 		double currLat = currentLatLng.latitude;
@@ -108,13 +108,13 @@ public class MainActivity extends Activity implements LocationListener {
 			jsonResponse = new JSONObject(data);
 			jsonArray = jsonResponse.getJSONArray("results");
 			jsonLength = jsonArray.length();
-
+			
 			nameOf = new String[jsonLength];
 			latitude = new double[jsonLength];
 			longitude = new double[jsonLength];
 
 			// Parse the information
-			for (int i = 0; i < jsonArray.length() + 1; ++i) {
+			for (int i = 0; i < jsonArray.length()+1; ++i) {
 
 				// access the json array
 				jsonObj = jsonArray.getJSONObject(i);
@@ -243,7 +243,6 @@ public class MainActivity extends Activity implements LocationListener {
 
 				String provider = my_location.getBestProvider(new Criteria(),
 						true);
-
 				if (provider == null) {
 					onProviderDisabled(provider);
 
