@@ -238,7 +238,6 @@ public class MainActivity extends Activity implements LocationListener {
 
 		} else if (item.getItemId() == R.id.setNormal) {
 			googlemap.setMapType(googlemap.MAP_TYPE_NORMAL);
-			googlemap.setTrafficEnabled(true);
 		}
 
 		else

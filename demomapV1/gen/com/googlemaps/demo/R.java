@@ -193,6 +193,8 @@ containing a value of this type.
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
         public static final int satellite=0x7f050002;
+        public static final int setHybrid=0x7f05000c;
+        public static final int setNormal=0x7f05000d;
         public static final int setPoint1=0x7f050009;
         public static final int setPoint2=0x7f05000a;
         public static final int setPoint3=0x7f05000b;

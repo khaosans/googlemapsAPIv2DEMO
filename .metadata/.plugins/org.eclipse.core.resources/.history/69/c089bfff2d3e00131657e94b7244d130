@@ -20,21 +20,5 @@
         android:showAsAction="ifRoom"
         android:title="Draw Red Line"/>
 
-<item
-        android:id="@+id/setHybrid"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:title="setHybrid"/>
 
-<item
-        android:id="@+id/satellite"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:title="satellite"/>
-
-<item
-        android:id="@+id/setNormal"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:title="Normal Map"/>
 </menu>

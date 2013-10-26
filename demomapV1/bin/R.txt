@@ -62,6 +62,8 @@ int id map 0x7f050005
 int id none 0x7f050000
 int id normal 0x7f050001
 int id satellite 0x7f050002
+int id setHybrid 0x7f05000c
+int id setNormal 0x7f05000d
 int id setPoint1 0x7f050009
 int id setPoint2 0x7f05000a
 int id setPoint3 0x7f05000b

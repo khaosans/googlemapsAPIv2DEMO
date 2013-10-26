@@ -231,14 +231,9 @@ public class MainActivity extends Activity implements LocationListener {
 			// change color back to default
 			colorValue = 1;
 		} else if (item.getItemId() == R.id.setHybrid) {
-			googlemap.setMapType(googlemap.MAP_TYPE_HYBRID);
 
 		} else if (item.getItemId() == R.id.satellite) {
-			googlemap.setMapType(googlemap.MAP_TYPE_SATELLITE);
 
-		} else if (item.getItemId() == R.id.setNormal) {
-			googlemap.setMapType(googlemap.MAP_TYPE_NORMAL);
-			googlemap.setTrafficEnabled(true);
 		}
 
 		else
@@ -258,8 +253,7 @@ public class MainActivity extends Activity implements LocationListener {
 				// add some code to initialize map
 				googlemap.setMyLocationEnabled(true);
 
-				LocationManager my_location = (LocationManager) this
-						.getSystemService(Context.LOCATION_SERVICE);
+				LocationManager my_location = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
 				String provider = my_location.getBestProvider(new Criteria(),
 						true);
